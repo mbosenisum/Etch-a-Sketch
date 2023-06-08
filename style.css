@@ -1,0 +1,25 @@
+.container{
+    background-color: light-grey;
+    display: flex;
+    flex-direction: column;
+    flex-basis: auto;
+    aspect-ratio: 1/1;
+    margin: 25px 25% 25% 25%;
+}
+
+.gridColumn{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.square {
+    display: flex;
+    flex-grow: 1;
+    /* change this? */
+    flex-basis: 50px;
+
+    border-style: solid;
+    justify-content: center;
+    align-items: center;
+}
