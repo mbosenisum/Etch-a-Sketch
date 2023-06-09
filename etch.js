@@ -1,56 +1,60 @@
 
 let container = document.getElementsByClassName("container")[0];
-console.log(container);
+//console.log(container);
 
-for (let i = 0; i < 4; i++) {
-    let column = document.createElement('div');
-    column.classList.add("gridColumn");
-    /*column.setAttribute('display','flex');*/
-    /*column.setAttribute('display','flex');*/
-    /*column.setAttribute('flex-direction','flex-direction: row');*/
-    for (let j = 0; j < 4; j++) {
-        let gridSquare = document.createElement('div');
-        gridSquare.classList.add("square");
-        gridSquare.textContent = `div ${(4 * i + j)}`;
-        gridSquare.setAttribute('id', `square ${(4 * i + j)}`);
-        // gridSquare.style.backgroundColor = 'rgba(10,10,10,0.2)';
-        gridSquare.style.backgroundColor = '#eeeeee';
-        //gridSquare.setAttribute('style', 'grid-template-rows: 4fr');
-        column.appendChild(gridSquare);
+function createGrid(length) {
+    for (let i = 0; i < length; i++) {
+        let column = document.createElement('div');
+        column.classList.add("gridColumn");
+        for (let j = 0; j < length; j++) {
+            let gridSquare = document.createElement('div');
+            gridSquare.classList.add("square");
+            //gridSquare.textContent = `div ${(length * i + j)}`;
+            gridSquare.setAttribute('id', `square ${(length * i + j)}`);
+            gridSquare.style.backgroundColor = '#ffffff';
+            gridSquare.addEventListener("mouseover", hover);
+            column.appendChild(gridSquare);
+        }
+        container.appendChild(column);
     }
-    container.appendChild(column);
 }
+
+function removeGrid() {
+    let columns = document.getElementsByClassName("gridColumn");
+    for (let i = columns.length - 1; i >= 0; i--) {
+        columns[i].remove();
+    }
+}
+
+//initial
+let gridSize = 5;
+createGrid(gridSize);
 
 let columns = document.getElementsByClassName("square");
-console.log(columns);
-console.log(columns[0]);
-
-for (let i = 0; i < 16; i++) {
-    let col = columns[i];
-    console.log(col);
-    col.addEventListener("mouseover", hover);
-}
 
 function hover() {
-    let rgbIncrement = 50;
-    console.log(this);
     let colorVal = this.style.backgroundColor;
-    //console.log(colorVal.toString().slice(4,colorVal.toString().length-1));
-    let rgb = colorVal.toString().slice(4, colorVal.toString().length - 1);
+    let rgb = colorVal.toString().slice(4, -1);
     let rgbVals = rgb.split(',');
-    console.log(rgbVals);
+
+    let rgbIncrement = 25;
     for (let i = 0; i < 3; i++) {
+        // ~10% blacker
+        /*
         if (rgbVals[i] - rgbIncrement < 0) {
             rgbVals[i] = 0;
         }
         else {
             rgbVals[i] -= rgbIncrement;
         }
+        */
+
+        // random
+        rgbVals[i] = Math.floor(Math.random() * 255);
     }
+
     let newColor = rgbToHex(...rgbVals);
-    console.log(newColor);
     this.style.backgroundColor = newColor;
-    //this.style.backgroundColor = this.style.backgroundColor + 
 }
 
 // https://learnersbucket.com/examples/interview/convert-rgb-to-hex-color-in-javascript/
@@ -63,7 +67,18 @@ function rgbToHex(r, g, b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
-// function hover() {
-//     let colorVal = parseInt(this.style.backgroundColor, 16);
-//     console.log(colorVal);  
-// }
+let resetButton = document.getElementById('reset');
+
+const buttonPressed = () => {
+    let gridSize = parseInt(prompt("How long do you want the grid to be?"));
+    if (gridSize > 100 || gridSize < 1) {
+        alert("Please enter an integer value less than 101 and greater than 0.");
+    }
+    else {
+        removeGrid();
+        createGrid(gridSize);
+    }
+}
+
+resetButton.addEventListener("click", buttonPressed);
+

@@ -1,10 +1,12 @@
 .container{
-    background-color: light-grey;
+    background-color: white;
     display: flex;
     flex-direction: column;
     flex-basis: auto;
     aspect-ratio: 1/1;
-    margin: 25px 25% 25% 25%;
+    margin: 0px 25% 25% 25%;
+    width: auto;
+    border-style: solid;
 }
 
 .gridColumn{
@@ -19,7 +21,17 @@
     /* change this? */
     flex-basis: 50px;
 
-    border-style: solid;
+    border-style: dotted;
+    border-width: 1px;
     justify-content: center;
     align-items: center;
+}
+
+
+#reset {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 25px;
 }
